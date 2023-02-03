@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
-export default function CocktailCard({nav, recomanded}) {
+export default function CocktailCard({navigation, recomanded}) {
   const {
     cocktailName,
     imageUri,
@@ -16,7 +16,7 @@ export default function CocktailCard({nav, recomanded}) {
 
   return (
     <View style={styles.cardContainer}>
-      <Text>{cocktailName}</Text>
+      <Text style={styles.title}>{cocktailName}</Text>
       <View>
         <Text>{`난이도 :${level}`}</Text>
         <Text>{`도  수 :${abv}`}</Text>
@@ -32,8 +32,13 @@ export default function CocktailCard({nav, recomanded}) {
         {/* 배열이 비어있을때는 이렇게 나타내줘 만들어야함 */}
       </View>
       <View style={styles.btnContainer}>
-        <TouchableOpacity onPress={nav}>
-          <Text>레시피 보기</Text>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('cocktailDetailScreen', {
+              recomanded: recomanded,
+            });
+          }}>
+          <Text style={styles.btnText}>자세히 보기</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -49,9 +54,25 @@ const styles = StyleSheet.create({
     borderColor: '#24221F',
     backgroundColor: '#FCFCFC',
     borderRadius: 7,
+    alignItems: 'center',
   },
   btnContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
     position: 'absolute',
-    bottom: 40,
+    bottom: 24,
+    borderWidth: 3,
+    borderColor: '#777775',
+    backgroundColor: '#24231F',
+    height: 40,
+    width: 278,
+  },
+  btnText: {
+    color: '#e7e7e7',
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: '800',
+    color: 'black',
   },
 });

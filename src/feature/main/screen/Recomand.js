@@ -3,15 +3,14 @@ import {StyleSheet, Text, View} from 'react-native';
 import {SafeArea} from '../../../component/util/SafeArea';
 import {RecomandedContext} from '../../../service/recomanded/recomanded.context';
 import {FlatList} from 'react-native-gesture-handler';
-import {CocktailStackScreen} from '../../../infra/navigation/CocktailStackScreen';
-import CocktailCard from '../../../component/cocktail/CocktailCard';
+import CocktailCard from '../../cocktail/component/CocktailCard';
 
 export default function Recomand({navigation}) {
   const {recomanded, isLoading} = useContext(RecomandedContext);
 
-  const navigateCocktailDetail = () => {
-    navigation.navigate('cocktailDetailScreen', {recomanded});
-  };
+  // const navigateCocktailDetail = i => {
+  //   navigation.navigate('cocktailDetailScreen', {restaurant : i});
+  // };
 
   return (
     <SafeArea>
@@ -24,9 +23,7 @@ export default function Recomand({navigation}) {
             horizontal={true}
             data={recomanded}
             renderItem={({item}) => {
-              return (
-                <CocktailCard recomanded={item} nav={navigateCocktailDetail} />
-              );
+              return <CocktailCard recomanded={item} navigation={navigation} />;
             }}
           />
         </View>

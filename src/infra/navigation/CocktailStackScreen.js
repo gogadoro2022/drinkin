@@ -1,6 +1,6 @@
 import React from 'react';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
-import CocktailDetail from '../../component/cocktail/CocktailDetail';
+import CocktailDetail from '../../feature/cocktail/component/CocktailDetail';
 import Liquor from '../../component/Detail/Liquor';
 import Ingredient from '../../component/Detail/Ingredient';
 import Tool from '../../component/Detail/Tool';
@@ -10,12 +10,11 @@ import Glass from '../../component/Detail/Glass';
 
 const Tab = createStackNavigator();
 
-export const CocktailStackScreen = props => {
-  console.log('navigator :', props);
+export const CocktailStackScreen = ({route}) => {
   return (
     <Tab.Navigator
-      headerMode="none"
       screenOptions={{
+        headerShown: false,
         gestureEnabled: true,
         ...TransitionPresets.ModalPresentationIOS,
       }}>
@@ -25,6 +24,7 @@ export const CocktailStackScreen = props => {
         options={{
           headerShown: false,
         }}
+        initialParams={{item: route}}
       />
       <Tab.Screen
         name="liquor"

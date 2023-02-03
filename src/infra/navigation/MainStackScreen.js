@@ -3,10 +3,9 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {Start} from '../../feature/main/screen/Start';
 import Select from '../../feature/main/screen/Select';
 import Recomand from '../../feature/main/screen/Recomand';
-import LogIn from '../../feature/signIn/LogIn';
 import {CocktailStackScreen} from './CocktailStackScreen';
 import LoginNavigation from './LoginNavigation';
-import CocktailCard from '../../component/cocktail/CocktailCard';
+import CocktailCard from '../../feature/cocktail/component/CocktailCard';
 
 const Tab = createStackNavigator();
 
