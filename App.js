@@ -4,6 +4,7 @@ import SplashScreen from 'react-native-splash-screen';
 import {AppNavigation} from './src/infra/navigation/AppNavigation';
 import {CocktailContextPorvider} from './src/service/cocktail/cocktail.context';
 import {RecomandedContextProvider} from './src/service/recomanded/recomanded.context';
+import {SelectContextProvider} from './src/service/select/select.context';
 
 export default function App() {
   useEffect(() => {
@@ -19,10 +20,12 @@ export default function App() {
   return (
     <>
       <CocktailContextPorvider>
-        <RecomandedContextProvider>
-          <AppNavigation />
-          <StatusBar />
-        </RecomandedContextProvider>
+        <SelectContextProvider>
+          <RecomandedContextProvider>
+            <AppNavigation />
+            <StatusBar />
+          </RecomandedContextProvider>
+        </SelectContextProvider>
       </CocktailContextPorvider>
     </>
   );

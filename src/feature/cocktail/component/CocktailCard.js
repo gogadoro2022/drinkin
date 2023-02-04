@@ -31,16 +31,15 @@ export default function CocktailCard({navigation, recomanded}) {
         <Text>{`가니쉬  ${garnish}`}</Text>
         {/* 배열이 비어있을때는 이렇게 나타내줘 만들어야함 */}
       </View>
-      <View style={styles.btnContainer}>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('cocktailDetailScreen', {
-              recomanded: recomanded,
-            });
-          }}>
-          <Text style={styles.btnText}>자세히 보기</Text>
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity
+        style={styles.btnContainer}
+        onPress={() => {
+          navigation.navigate('cocktailDetailScreen', {
+            recomanded: recomanded,
+          });
+        }}>
+        <Text style={styles.btnText}>자세히 보기</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -57,6 +56,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   btnContainer: {
+    borderRadius: 4,
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute',

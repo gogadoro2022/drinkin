@@ -3,6 +3,9 @@ import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import LoadingIndicator from '../../../component/util/LoadingIndicator';
 import {SafeArea} from '../../../component/util/SafeArea';
 import {CocktailContext} from '../../../service/cocktail/cocktail.context';
+import UnSelectedCard from '../component/UnSelectedCard';
+import SelectedCard from '../component/SelectedCard';
+import BridgeCard from '../component/BridgeCard';
 
 // * 2월 3일 작업할것
 // 칵테일 아이템을 눌렀을때 체크되어있는 상태로...
@@ -52,16 +55,17 @@ export default function Select({navigation}) {
         renderItem={({item}) => {
           const {imageUri, cocktailName, cocktailEnglishName} = item;
           return (
-            <TouchableOpacity>
-              <View style={styles.cocktailContainer}>
-                <Text>{cocktailName}</Text>
-                <Text>{cocktailEnglishName}</Text>
-              </View>
-            </TouchableOpacity>
+            <BridgeCard
+              image={imageUri}
+              cocktailName={cocktailName}
+              cocktailEngName={cocktailEnglishName}
+              cocktail={item}
+            />
           );
         }}
         numColumns={3}
       />
+      <FlatList />
       <View style={styles.selecBtnContainer}>
         {/* 여기서 리셋 떄려야함 */}
         <TouchableOpacity
@@ -115,13 +119,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginLeft: 16,
     marginRight: 16,
-  },
-  cocktailContainer: {
-    height: 160,
-    width: 108,
-    borderRadius: 8,
-    backgroundColor: '#F7F7F7',
-    marginLeft: 9,
-    marginBottom: 8,
   },
 });

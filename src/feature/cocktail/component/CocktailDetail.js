@@ -54,39 +54,47 @@ export default function CocktailDetail({navigation, route}) {
           <Text style={styles.infoTitle}>정보</Text>
           <View style={styles.lineContainer}>
             <Text style={styles.key}>{`도   구`}</Text>
-            <TouchableOpacity style={styles.valueContainer}>
+            <TouchableOpacity
+              style={styles.valueContainer}
+              onPress={() => navigation.navigate('tool')}>
               <Text>{tool}</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.lineContainer}>
             <Text style={styles.key}>{`기   법`}</Text>
-            <TouchableOpacity style={styles.valueContainer}>
+            <TouchableOpacity
+              style={styles.valueContainer}
+              onPress={() => navigation.navigate('skill')}>
               <Text>{skill}</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.lineContainer}>
             <Text style={styles.key}>글라스</Text>
-            <TouchableOpacity style={styles.valueContainer}>
+            <TouchableOpacity
+              style={styles.valueContainer}
+              onPress={() => navigation.navigate('glass')}>
               <Text>{glass}</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.lineContainer}>
             <Text style={styles.key}>{`도   수`}</Text>
-            <TouchableOpacity style={styles.valueContainer}>
+            <TouchableOpacity
+              style={styles.valueContainer}
+              onPress={() => navigation.navigate('abv')}>
               <Text>{abv}</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.lineContainer}>
             <Text style={styles.key}>난이도</Text>
-            <TouchableOpacity style={styles.valueContainer}>
+            <View style={styles.valueContainer}>
               <Text>{level}</Text>
-            </TouchableOpacity>
+            </View>
           </View>
           <View style={styles.lineContainer}>
             <Text style={styles.key}>{`당   도`}</Text>
-            <TouchableOpacity style={styles.valueContainer}>
+            <View style={styles.valueContainer}>
               <Text>{sugarContent}</Text>
-            </TouchableOpacity>
+            </View>
           </View>
         </View>
         <View style={styles.infoContainer}>

@@ -1,5 +1,5 @@
 import React from 'react';
 
-export default function Glass() {
+export default function BaseDetail() {
   return <></>;
 }

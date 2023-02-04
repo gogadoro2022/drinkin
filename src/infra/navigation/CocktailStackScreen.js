@@ -1,12 +1,12 @@
 import React from 'react';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import CocktailDetail from '../../feature/cocktail/component/CocktailDetail';
-import Liquor from '../../component/Detail/Liquor';
-import Ingredient from '../../component/Detail/Ingredient';
-import Tool from '../../component/Detail/Tool';
-import Skill from '../../component/Detail/Skill';
-import Abv from '../../component/Detail/Abv';
-import Glass from '../../component/Detail/Glass';
+import Base from '../../feature/base/screen/Base';
+import BaseDetail from '../../feature/base/screen/BaseDetail';
+import Skill from '../../feature/detailModals/screen/Skill';
+import Abv from '../../feature/detailModals/screen/Abv';
+import Glass from '../../feature/detailModals/screen/Glass';
+import Tool from '../../feature/detailModals/screen/Tool';
 
 const Tab = createStackNavigator();
 
@@ -27,15 +27,15 @@ export const CocktailStackScreen = ({route}) => {
         initialParams={{item: route}}
       />
       <Tab.Screen
-        name="liquor"
-        component={Liquor}
+        name="base"
+        component={Base}
         options={{
           headerShown: false,
         }}
       />
       <Tab.Screen
-        name="ingredient"
-        component={Ingredient}
+        name="baseDetail"
+        component={BaseDetail}
         options={{
           headerShown: false,
         }}
