@@ -7,11 +7,15 @@ export const SelectContextProvider = ({children}) => {
 
   const remove = cocktail => {
     const filtering = selectedCocktail.filter(i => {
-      i.id !== cocktail.id;
+      console.log(cocktail);
+      console.log('remove');
+      return i.id !== cocktail.id;
     });
     setSelectedCocktail(filtering);
   };
   const add = cocktail => {
+    console.log(cocktail);
+    console.log('add');
     setSelectedCocktail([...selectedCocktail, cocktail]);
   };
 
