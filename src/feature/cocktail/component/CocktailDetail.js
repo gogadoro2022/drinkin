@@ -14,8 +14,6 @@ import {SafeArea} from '../../../component/util/SafeArea';
 // 그래서 모달창에서 전체 데이터를 리퀘스트 해와도 여기서 가져간 특정 데이터를 활용해서 UI만듬
 
 export default function CocktailDetail({navigation, route}) {
-  console.log(route.params.item.params.recomanded);
-
   const {
     cocktailName,
     cocktailEnglishName,
@@ -42,7 +40,9 @@ export default function CocktailDetail({navigation, route}) {
           <Text>{cocktailDescription}</Text>
         </View>
         <View>
-          <TouchableOpacity>
+          <TouchableOpacity
+            style={styles.valueContainer}
+            onPress={() => navigation.navigate('Base')}>
             <Text>{base}</Text>
           </TouchableOpacity>
         </View>

@@ -20,12 +20,12 @@ export default function App() {
   return (
     <>
       <CocktailContextPorvider>
-        <SelectContextProvider>
-          <RecomandedContextProvider>
-            <AppNavigation />
-            <StatusBar />
-          </RecomandedContextProvider>
-        </SelectContextProvider>
+        {/* <SelectContextProvider> */}
+        {/* <RecomandedContextProvider> */}
+        <AppNavigation />
+        <StatusBar />
+        {/* </RecomandedContextProvider> */}
+        {/* </SelectContextProvider> */}
       </CocktailContextPorvider>
     </>
   );

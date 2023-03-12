@@ -1,6 +1,6 @@
 import {BASE_URL} from '../url';
 
-export const cocktailRequest = () => {
+export const cocktailsRequest = async () => {
   return fetch(`${BASE_URL}/cocktail`)
     .then(res => res.json())
     .then(res => {
@@ -8,6 +8,15 @@ export const cocktailRequest = () => {
     });
 };
 
-export const cocktailTransform = res => {
-  return res.results;
+export const recomandedCocktailRequest = async () => {
+  return fetch(`${BASE_URL}/cocktail`).then(res => {
+    return res.json();
+  });
 };
+
+// export const recomandedTransform = res => {
+//   const data = res.results.reduce((acc, cur) => {
+//     return [...acc, ...cur.cocktails];
+//   }, []);
+//   return data;
+// };

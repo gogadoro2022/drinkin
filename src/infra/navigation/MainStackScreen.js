@@ -34,7 +34,7 @@ export const MainStackScreen = () => {
         }}
       />
       <Tab.Screen
-        name="logIn"
+        name="logInStack"
         component={LoginNavigation}
         options={{
           headerShown: false,

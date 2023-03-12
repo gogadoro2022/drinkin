@@ -1,11 +1,19 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  FlatList,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import LoadingIndicator from '../../../component/util/LoadingIndicator';
 import {SafeArea} from '../../../component/util/SafeArea';
 import {CocktailContext} from '../../../service/cocktail/cocktail.context';
 import BridgeCard from '../component/BridgeCard';
 import {SelectContext} from '../../../service/select/select.context';
 import CategoryBtn from '../component/CategoryBtn';
+import {sendSelectedCocktailRequest} from '../../../service/auth/auth.service';
 
 // * 2월 3일 작업할것
 // 칵테일 아이템을 눌렀을때 체크되어있는 상태로...
@@ -25,22 +33,51 @@ select 창이 중요하네. 여기서 선택했을때 불리언으로 선택된 
 */
 
 export default function Select({navigation}) {
-  const {cocktails, isLoading, error, setCocktails} =
+  const [isSelected, setIsSelected] = useState(null);
+  const {cocktails, isLoading, error, sendSelectedCocktails} =
     useContext(CocktailContext);
-  const {selectedCocktail} = useContext(SelectContext);
+  const [filteredCocktails, setFilteredCocktails] = useState(totalCocktails);
+  const [selectedCocktail, setSelectedCocktail] = useState([]);
   const totalCocktails = cocktails.reduce((acc, cur) => {
     return [...acc, ...cur.cocktails];
   }, []);
-  console.log(totalCocktails);
-  const [filteredCocktails, setFilteredCocktails] = useState(totalCocktails);
-  // const [selectedCategory, setSelectedCategory] = useState(null);
+
+  const handleSelected = category => {
+    setIsSelected(category);
+  };
+
+  const handleSelectedCocktail = item => {
+    setSelectedCocktail(selectedCocktail, ...item);
+  };
+
+  const onPressNextOrCancle = item => {
+    if (selectedCocktail === [] || item === 'cancle') {
+      // 모달로 넘어감
+      return;
+    }
+    sendSelectedCocktails(item);
+    // 로그인이 된 유저라면? 바로 추천 페이지,
+    if ((user = null)) {
+      navigation.navigate('logInStack');
+    }
+    navigation.navigate('recomandedCard');
+  };
+
+  const onPressCancle = () => {};
+  // 그러면은 여기서 만약에 클릭이된 버튼의 카테고리가 wien 이면 와인에 등록이 되겠지.
+  // 그럼 이제 이거를 프롭스로 보내줄때 비교할만한거를 찾으면 됨. 지금 이게 클릭된거에서 왔으니까
+  //
+
+  const resetFilteredCocktails = () => {
+    setFilteredCocktails(totalCocktails);
+  };
 
   const filterCategory = category => {
     const filtered = cocktails.filter(obj => {
       return obj.categoryName === category;
     });
-    setFilteredCocktails(filtered);
-    console.log('filtered --', filtered);
+    const data = filtered[0].cocktails;
+    setFilteredCocktails(data);
   };
 
   //if cocktails.categoryName === tequila ?
@@ -58,35 +95,60 @@ export default function Select({navigation}) {
           선택을 기반으로 다양한 칵테일을 추천해 드립니다
         </Text>
       </View>
-      <View style={styles.categoryContainer}>
+      {!isLoading && (
+        <View style={styles.categoryContainer}>
+          <ScrollView horizontal={true}>
+            <View
+              style={
+                isSelected === null
+                  ? styles.selectedCategory
+                  : styles.categoryBtnContainer
+              }>
+              <TouchableOpacity
+                onPress={() => {
+                  resetFilteredCocktails();
+                  setIsSelected(null);
+                }}>
+                <Text
+                  style={
+                    isSelected === null
+                      ? styles.selectedCategoryTitle
+                      : styles.categoryTitle
+                  }>
+                  전체
+                </Text>
+              </TouchableOpacity>
+            </View>
+            {cocktails.map((item, index) => {
+              return (
+                <CategoryBtn
+                  key={index}
+                  item={item}
+                  filterCategory={filterCategory}
+                  isSelect={item.categoryName === isSelected}
+                  handleSelected={handleSelected}
+                />
+              );
+            })}
+          </ScrollView>
+        </View>
+      )}
+      <View style={styles.allCocktailContainer}>
         <FlatList
-          horizontal={true}
-          data={cocktails}
+          data={filteredCocktails}
           renderItem={({item}) => {
-            return <CategoryBtn item={item} filterCategory={filterCategory} />;
+            return (
+              <BridgeCard
+                item={item}
+                handleSelectedCocktail={handleSelectedCocktail}
+              />
+            );
           }}
+          numColumns={3}
         />
       </View>
-      <FlatList
-        style={styles.allCocktailContainer}
-        data={filteredCocktails}
-        renderItem={({item}) => {
-          return <BridgeCard item={item} />;
-        }}
-        numColumns={3}
-      />
-      <View>
-        {
-          // 재미로 있는 기능. 나중에는 삭제할것
-          selectedCocktail.map(item => {
-            const {cocktailName, id} = item;
-            return <Text key={id}>{cocktailName}</Text>;
-          })
-        }
-      </View>
       <View style={styles.selecBtnContainer}>
-        <TouchableOpacity
-          onPress={() => navigation.reset({routes: [{name: 'recomand'}]})}>
+        <TouchableOpacity onPress={onPressNextOrCancle}>
           <Text style={styles.selecBtnText}>선택완료</Text>
         </TouchableOpacity>
       </View>
@@ -115,7 +177,7 @@ const styles = StyleSheet.create({
   },
   categoryContainer: {
     height: 40,
-    backgroundColor: 'yellow',
+    backgroundColor: null,
     margin: 19,
   },
   titleContainer: {
@@ -134,8 +196,39 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   allCocktailContainer: {
+    flex: 1,
     flexDirection: 'row',
     marginLeft: 16,
     marginRight: 16,
+  },
+  categoryBtnContainer: {
+    backgroundColor: '#F7F7F7',
+    borderRadius: 4,
+    paddingLeft: 16,
+    paddingRight: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 8,
+  },
+  selectedCategory: {
+    backgroundColor: '#24231F',
+    borderRadius: 4,
+    paddingLeft: 16,
+    paddingRight: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 8,
+  },
+  categoryTitle: {
+    fontWeight: '700',
+    fontSize: 14,
+    color: '#24221F',
+    lineHeight: 20,
+  },
+  selectedCategoryTitle: {
+    fontWeight: '700',
+    fontSize: 14,
+    color: '#FCFCFC',
+    lineHeight: 20,
   },
 });

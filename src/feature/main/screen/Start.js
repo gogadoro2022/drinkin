@@ -3,6 +3,11 @@ import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {SafeArea} from '../../../component/util/SafeArea';
 
 export const Start = ({navigation}) => {
+  const onPressStart = () => {
+    console.log('click');
+    navigation.navigate('selectCocktail');
+  };
+
   return (
     <SafeArea>
       <View style={styles.logoContainer}>
@@ -16,12 +21,13 @@ export const Start = ({navigation}) => {
           <Image source={require('../../../img/mainBackground.png')} />
         </View>
         <View style={styles.StartContainer}>
-          <Image source={require('../../../img/mainCocktail.png')} />
+          <Image
+            source={require('../../../img/mainCocktail.png')}
+            style={{marginBottom: 8}}
+          />
           <Text style={styles.StartText}>마셔봤던 칵테일을 선택하고</Text>
           <Text style={styles.StartText}>다양한 칵테일을 추천 받아 보세요</Text>
-          <TouchableOpacity
-            style={styles.StartBtn}
-            onPress={() => navigation.navigate('selectCocktail')}>
+          <TouchableOpacity style={styles.StartBtn} onPress={onPressStart}>
             <Text style={styles.StartBtnText}>시작하기</Text>
           </TouchableOpacity>
         </View>
@@ -60,8 +66,17 @@ const styles = StyleSheet.create({
     lineHeight: 25.5,
     color: 'black',
   },
+  startBtnContainer: {},
   StartBtn: {
-    backgroundColor: 'black',
+    marginTop: 8,
+    backgroundColor: '#24231F',
+    borderWidth: 3,
+    borderColor: '#777775',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 40,
+    width: 100,
+    height: 40,
   },
   StartBtnText: {
     color: '#e7e7e7',

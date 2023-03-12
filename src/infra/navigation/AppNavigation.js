@@ -1,17 +1,16 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Main} from '../../feature/main/screen/Start';
 import {Cocktail} from '../../feature/cocktail/screen/Cocktail';
 import {MyHomebar} from '../../feature/myHomebar/screen/MyHomebar';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import Ionicon from 'react-native-vector-icons/Ionicons';
 import {MainStackScreen} from './MainStackScreen';
 
 const Tab = createBottomTabNavigator();
 const TAB_ICONS = {
-  메인: 'home-sharp',
-  칵테일: 'ios-wine-outline',
-  '나의 홈바': 'person-outline',
+  메인: 'md-home-outline',
+  칵테일: 'md-wine-outline',
+  '나의 홈바': 'md-person-outline',
 };
 
 export const AppNavigation = () => {
@@ -21,13 +20,15 @@ export const AppNavigation = () => {
         screenOptions={({route}) => ({
           tabBarIcon: ({color, size}) => {
             const iconName = TAB_ICONS[route.name];
-            return <Ionicons name={iconName} color={color} size={size} />;
+            return <Ionicon name={iconName} size={size} color={color} />;
           },
         })}>
         <Tab.Screen
           name="메인"
           component={MainStackScreen}
-          options={{headerShown: false}}
+          options={{
+            headerShown: false,
+          }}
         />
         <Tab.Screen
           name="칵테일"

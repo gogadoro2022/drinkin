@@ -1,15 +1,26 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {SafeArea} from '../../../component/util/SafeArea';
-import {RecomandedContext} from '../../../service/recomanded/recomanded.context';
 import {FlatList} from 'react-native-gesture-handler';
 import CocktailCard from '../../cocktail/component/CocktailCard';
 
 export default function Recomand({navigation}) {
-  const {recomanded, isLoading} = useContext(RecomandedContext);
+  const [isLoading, setIsLoading] = useState(false);
+  const [recomandedCocktail, setRecomandedCocktail] = useState([]);
+  // const {recomanded, isLoading} = useContext(RecomandedContext);
 
   // const navigateCocktailDetail = i => {
   //   navigation.navigate('cocktailDetailScreen', {restaurant : i});
+  // };
+
+  // api로 받아옴
+  // const retreive = async () => {
+  //   await recomandedCocktailRequest
+  //     .then(res => {
+  //       console.log('추천 칵테일 받아옴');
+  //       setRecomandedCocktail(res);
+  //     })
+  //     .catch(err => console.error(`ERR ${err}`));
   // };
 
   return (
@@ -21,7 +32,7 @@ export default function Recomand({navigation}) {
         <View style={styles.cardListContainer}>
           <FlatList
             horizontal={true}
-            data={recomanded}
+            data={recomandedCocktail}
             renderItem={({item}) => {
               return <CocktailCard recomanded={item} navigation={navigation} />;
             }}

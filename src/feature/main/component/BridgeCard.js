@@ -3,21 +3,19 @@ import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
 import {SelectContext} from '../../../service/select/select.context';
 
 export default function BridgeCard({item}) {
-  console.log('item :', item);
   const [isSelected, setIsSelected] = useState(false);
   const {addToSelected, removeFromSelected, selectedCocktail} =
     useContext(SelectContext);
 
   const {cocktailName, cocktailEnglishName} = item;
 
-  const selectedHandler = cocktail => {
-    isSelected ? removeFromSelected(cocktail) : addToSelected(cocktail);
+  const selectedHandler = item => {
+    isSelected ? removeFromSelected(item) : addToSelected(item);
     setIsSelected(!isSelected);
-    console.log(selectedCocktail);
   };
 
   return (
-    <TouchableOpacity onPress={() => selectedHandler(cocktail)}>
+    <TouchableOpacity onPress={() => selectedHandler(item)}>
       <View
         style={
           isSelected
